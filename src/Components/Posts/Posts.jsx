@@ -1,38 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Post from "./Post/Post";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostRequest } from "../../actions/PostAction";
-
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import Form from "../Form/Form";
 
 const Posts = () => {
-  const dispatch = useDispatch();
+  const [selectedPost, setSelectedPost] = useState(null);
   const { posts, loading, error } = useSelector((state) => state.posts);
 
-  useEffect(() => {
-    dispatch(fetchPostRequest());
-  }, [dispatch]);
+  if (loading) {
+    return <div>loading...</div>;
+  }
 
-  console.log("posts:", posts);
-  console.log("loading:", loading);
-  console.log("error:", error);
+  if (error) {
+    return <div>Error:{error}</div>;
+  }
 
-  // const posts = useSelector((state) => state.posts);
-  // console.log(posts);
+  const handleEdit = (post) => {
+    setSelectedPost(post);
+  };
+
+  const handleCancelEdit = () => {
+    setSelectedPost(null);
+    console.log("handleCancelEdit:", handleCancelEdit);
+  };
+
   return (
-    <div>
-      Posts
-      {posts &&
-        posts.map((post) => {
-          return (
-            <div key={post._id}>
-              <h1>{post.title}</h1>
-              <img src={post.selectedFile} alt="post" />
-            </div>
-          );
-        })}
-      <Post />
-      <Post />
+    <div className="container mx-auto">
+      {selectedPost ? (
+        <Form initialData={selectedPost} onCancelEdit={handleCancelEdit} />
+      ) : (
+        <div className="grid grid-cols-1 gap-y-64 w-full mx-10 xl:grid-cols-2 xl:gap-10">
+          {posts.map((post) => (
+            <Post key={post._id} post={post} onEdit={handleEdit} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

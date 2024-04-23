@@ -1,36 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FileBase from "react-file-base64";
-import { addPostsRequest } from "../../actions/PostAction";
 import { useDispatch } from "react-redux";
+import { addPostsRequest, updatePostsRequest } from "../../actions/PostAction";
 
-const Form = () => {
-  const [postData, SetPostData] = useState({
-    creator: "",
-    title: "",
-    message: "",
-    tags: "",
-    selectedFile: "",
-  });
+const Form = ({ initialData, onCancelEdit }) => {
+  const [postData, setPostData] = useState(
+    initialData || {
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    }
+  );
+
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    dispatch(addPostsRequest(postData));
+  useEffect(() => {
+    if (initialData) {
+      setPostData(initialData);
+    }
+  }, [initialData]);
 
-    console.log("Posts Submitted Successfully", postData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Type of onCancelEdit:", typeof onCancelEdit);
+    if (initialData) {
+      dispatch(updatePostsRequest(initialData._id, postData));
+      onCancelEdit();
+    } else {
+      dispatch(addPostsRequest(postData));
+    }
+
+    clear();
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setPostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  };
 
   return (
-    <div className="h-fit  border-2 shadow-2xl rounded-lg w-full px-10">
+    <div className="h-fit bg-white border-2 shadow-2xl rounded-lg w-full px-10">
       <form
         autoComplete="off"
         onSubmit={handleSubmit}
         className="max-w-md mx-auto"
       >
-        <h1 className="text-3xl font-bold py-5 px-5">Create Memory </h1>
+        <h1 className="text-3xl font-bold py-5 px-5">
+          {initialData ? "Update Memory" : "Create Memory"}
+        </h1>
         <div>
-          <div className="relative z-0 w-full mb-5  group">
+          <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
               name="creator"
@@ -38,7 +64,7 @@ const Form = () => {
               placeholder=" "
               value={postData.creator}
               onChange={(e) =>
-                SetPostData({ ...postData, creator: e.target.value })
+                setPostData({ ...postData, creator: e.target.value })
               }
               required
             />
@@ -48,7 +74,7 @@ const Form = () => {
             >
               Creator
             </label>
-          </div>{" "}
+          </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
@@ -57,7 +83,7 @@ const Form = () => {
               placeholder=" "
               value={postData.title}
               onChange={(e) =>
-                SetPostData({ ...postData, title: e.target.value })
+                setPostData({ ...postData, title: e.target.value })
               }
               required
             />
@@ -76,7 +102,7 @@ const Form = () => {
               placeholder=" "
               value={postData.message}
               onChange={(e) =>
-                SetPostData({ ...postData, message: e.target.value })
+                setPostData({ ...postData, message: e.target.value })
               }
               required
             />
@@ -95,7 +121,7 @@ const Form = () => {
               placeholder=" "
               value={postData.tags}
               onChange={(e) =>
-                SetPostData({ ...postData, tags: e.target.value })
+                setPostData({ ...postData, tags: e.target.value })
               }
               required
             />
@@ -111,24 +137,26 @@ const Form = () => {
               type="file"
               multiple={false}
               onDone={({ base64 }) =>
-                SetPostData({ ...postData, selectedFile: base64 })
+                setPostData({ ...postData, selectedFile: base64 })
               }
             />
           </div>
         </div>
         <button
           type="submit"
-          className="text-white relative  z-0 mb-5 group bg-black hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-32 py-2.5 text-center"
+          className="text-white relative z-0 mb-5 group bg-black hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-32 py-2.5 text-center"
         >
-          Submit
+          {initialData ? "Update" : "Submit"}
         </button>
-        <br></br>
-        <button
-          className="text-white relative  z-0 mb-5 group bg-red-700 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-32 pr-[46.5%] py-2.5 text-center"
-          onClick={clear}
-        >
-          Clear
-        </button>
+        <br />
+        {initialData && (
+          <button
+            className="text-white relative z-0 mb-5 group bg-red-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-32 py-2.5 text-center"
+            onClick={onCancelEdit}
+          >
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );

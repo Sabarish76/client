@@ -35,7 +35,26 @@ function* fetchPosts() {
   }
 }
 
+function updatepostapi(id, postData) {
+  return axios.patch(`http://localhost:8000/posts/${id}`, postData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+function* updatePost(action) {
+  const { id, postData } = action.payload;
+  try {
+    const response = yield call(updatepostapi, id, postData);
+    yield put(actions.updatePostsSuccess(response.data));
+  } catch (error) {
+    yield put(actions.updatePostFailure(error));
+  }
+}
+
 export function* watchFetchPosts() {
   yield takeEvery(constant.ADD_POST_REQUEST, addPosts);
   yield takeLatest(constant.GET_POST_REQUEST, fetchPosts);
+  yield takeEvery(constant.UPDATE_POST_REQUEST, updatePost);
 }

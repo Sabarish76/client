@@ -10,6 +10,7 @@ const PostReducer = (state = initialstate, action) => {
   switch (action.type) {
     case constants.GET_POST_REQUEST:
     case constants.ADD_POST_REQUEST:
+    case constants.UPDATE_POST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -27,12 +28,22 @@ const PostReducer = (state = initialstate, action) => {
         loading: false,
         posts: action.payload,
       };
-    case constants.GET_POST_FAILURE:
-    case constants.ADD_POST_FAILURE:
+    case constants.UPDATE_POST_SUCCESS:
+      const updatedPosts = state.posts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
       return {
         ...state,
         loading: false,
-        error: action.patload,
+        posts: updatedPosts,
+      };
+    case constants.GET_POST_FAILURE:
+    case constants.ADD_POST_FAILURE:
+    case constants.UPDATE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
       };
 
     default:
