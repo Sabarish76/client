@@ -3,13 +3,13 @@ import moment from "moment";
 import { BsThreeDots } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import { useDispatch } from "react-redux";
 
 const Post = ({ post, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [hovered, setHovered] = useState(false);
 
   const handleEditClick = () => {
+    console.log(isEditing);
     setIsEditing(true);
     onEdit(post);
   };
