@@ -3,6 +3,8 @@ import moment from "moment";
 import { BsThreeDots } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { deletePostRequest } from "../../../actions/PostAction";
 
 const Post = ({ post, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -21,7 +23,11 @@ const Post = ({ post, onEdit }) => {
   const handleMouseLeave = () => {
     setHovered(false);
   };
+  const dispatch = useDispatch();
 
+  const handleDeleteClick = () => {
+    dispatch(deletePostRequest(post._id));
+  };
   return (
     <div style={{ marginBottom: "20px" }}>
       <div className="max-w-sm bg-white border-2 border-grey-200 shadow-xl rounded-lg">
@@ -66,7 +72,10 @@ const Post = ({ post, onEdit }) => {
               Like <span className="px-1">{post.likeCount}</span>
             </div>
           </div>
-          <div className="flex items-center">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={handleDeleteClick}
+          >
             <MdDelete />
             <div className="px-2">Delete</div>
           </div>

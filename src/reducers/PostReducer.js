@@ -11,6 +11,7 @@ const PostReducer = (state = initialstate, action) => {
     case constants.GET_POST_REQUEST:
     case constants.ADD_POST_REQUEST:
     case constants.UPDATE_POST_REQUEST:
+    case constants.DELETE_POST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -37,9 +38,20 @@ const PostReducer = (state = initialstate, action) => {
         loading: false,
         posts: updatedPosts,
       };
+    case constants.DELETE_POST_SUCCESS:
+      const deletedPosts = state.posts.filter(
+        (post) => post._id !== action.payload
+      );
+      return {
+        ...state,
+        loading: false,
+        posts: deletedPosts,
+      };
+
     case constants.GET_POST_FAILURE:
     case constants.ADD_POST_FAILURE:
     case constants.UPDATE_POST_FAILURE:
+    case constants.DELETE_POST_FAILURE:
       return {
         ...state,
         loading: false,

@@ -31,7 +31,7 @@ export const addPostsFailure = (error) => ({
 
 export const updatePostsRequest = (id, postData) => ({
   type: constants.UPDATE_POST_REQUEST,
-  payload: { id, postData }, // Pass id and postData as an object
+  payload: { id, postData },
 });
 
 export const updatePostsSuccess = (updatedPost) => ({
@@ -42,4 +42,19 @@ export const updatePostsSuccess = (updatedPost) => ({
 export const updatePostFailure = (error) => ({
   type: constants.UPDATE_POST_FAILURE,
   payload: error,
+});
+
+export const deletePostRequest = (id) => ({
+  type: constants.DELETE_POST_REQUEST,
+  payload: id,
+});
+
+export const deletePostSuccess = (id) => ({
+  type: constants.DELETE_POST_SUCCESS,
+  payload: id,
+});
+
+export const deletePostFailure = (error) => ({
+  type: constants.DELETE_POST_FAILURE,
+  payload: { message: error.message },
 });

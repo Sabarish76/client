@@ -53,8 +53,25 @@ function* updatePost(action) {
   }
 }
 
+function* deletePost(action) {
+  try {
+    const response = yield call(
+      axios.delete,
+      `http://localhost:8000/posts/${action.payload}`
+    );
+    if (response.status === 200) {
+      yield put(actions.deletePostSuccess(action.payload));
+    } else {
+      yield put(actions.deletePostFailure("Failed to delete post"));
+    }
+  } catch (error) {
+    yield put(actions.deletePostFailure(error));
+  }
+}
+
 export function* watchFetchPosts() {
   yield takeEvery(constant.ADD_POST_REQUEST, addPosts);
   yield takeLatest(constant.GET_POST_REQUEST, fetchPosts);
   yield takeEvery(constant.UPDATE_POST_REQUEST, updatePost);
+  yield takeEvery(constant.DELETE_POST_REQUEST, deletePost);
 }

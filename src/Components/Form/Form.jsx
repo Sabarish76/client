@@ -23,9 +23,9 @@ const Form = ({ initialData, onCancelEdit }) => {
   }, [initialData]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log("Type of onCancelEdit:", typeof onCancelEdit);
     if (initialData) {
+      e.preventDefault();
       dispatch(updatePostsRequest(initialData._id, postData));
       onCancelEdit();
     } else {
