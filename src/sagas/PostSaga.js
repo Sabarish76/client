@@ -69,9 +69,26 @@ function* deletePost(action) {
   }
 }
 
+function* LikePost(action) {
+  try {
+    const response = yield call(
+      axios.patch,
+      `http://localhost:8000/posts/${action.payload}/likePost`
+    );
+    if (response.status === 200) {
+      yield put(actions.likePostSuccess(response.data));
+    } else {
+      yield put(actions.likePostFailure("Failde to like post"));
+    }
+  } catch (error) {
+    yield put(actions.likePostFailure(error));
+  }
+}
+
 export function* watchFetchPosts() {
   yield takeEvery(constant.ADD_POST_REQUEST, addPosts);
   yield takeLatest(constant.GET_POST_REQUEST, fetchPosts);
   yield takeEvery(constant.UPDATE_POST_REQUEST, updatePost);
   yield takeEvery(constant.DELETE_POST_REQUEST, deletePost);
+  yield takeEvery(constant.LIKE_POST_REQUEST, LikePost);
 }

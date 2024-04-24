@@ -58,3 +58,18 @@ export const deletePostFailure = (error) => ({
   type: constants.DELETE_POST_FAILURE,
   payload: { message: error.message },
 });
+
+export const likePostRequest = (id) => ({
+  type: constants.LIKE_POST_REQUEST,
+  payload: id,
+});
+
+export const likePostSuccess = (updatedPost) => ({
+  type: constants.LIKE_POST_SUCCESS,
+  payload: updatedPost,
+});
+
+export const likePostFailure = (error) => ({
+  type: constants.LIKE_POST_FAILURE,
+  payload: { message: error.message },
+});

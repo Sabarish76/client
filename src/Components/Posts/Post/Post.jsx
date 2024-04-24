@@ -4,7 +4,10 @@ import { BsThreeDots } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { deletePostRequest } from "../../../actions/PostAction";
+import {
+  deletePostRequest,
+  likePostRequest,
+} from "../../../actions/PostAction";
 
 const Post = ({ post, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,6 +30,10 @@ const Post = ({ post, onEdit }) => {
 
   const handleDeleteClick = () => {
     dispatch(deletePostRequest(post._id));
+  };
+
+  const handlelikeClick = () => {
+    dispatch(likePostRequest(post._id));
   };
   return (
     <div style={{ marginBottom: "20px" }}>
@@ -65,15 +72,18 @@ const Post = ({ post, onEdit }) => {
           <p className="mb-2 font-bold text-xl text-black">{post.title}</p>
           <p className="mb-2 font-normal text-gray-700">{post.message}</p>
         </div>
-        <div className="flex justify-between p-5">
-          <div className="flex items-center">
+        <div className="flex justify-between p-5 ">
+          <div
+            className="flex items-center cursor-pointer text-blue-600 hover:text-blue-400"
+            onClick={handlelikeClick}
+          >
             <AiFillLike />
             <div className="px-2 flex items-center">
               Like <span className="px-1">{post.likeCount}</span>
             </div>
           </div>
           <div
-            className="flex items-center cursor-pointer"
+            className="flex items-center cursor-pointer text-red-600 hover:text-red-400"
             onClick={handleDeleteClick}
           >
             <MdDelete />
