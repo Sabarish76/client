@@ -13,7 +13,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="h-fit w-full lg:w-[80%] mx-auto">
+    <div className="h-fit w-full lg:w-[90%] lg:mx-auto">
       <div className="text-center flex border-2 justify-center border-grey-100 bg-white shadow-xl rounded-lg">
         <div>
           {" "}

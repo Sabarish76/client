@@ -29,7 +29,7 @@ const Posts = () => {
       {selectedPost ? (
         <Form initialData={selectedPost} onCancelEdit={handleCancelEdit} />
       ) : (
-        <div className="grid grid-cols-1 gap-y-64 w-full mx-10 xl:grid-cols-2 xl:gap-10">
+        <div className="grid grid-cols-1  w-full xl:grid-cols-2 xl:gap-10">
           {posts.map((post) => (
             <Post key={post._id} post={post} onEdit={handleEdit} />
           ))}
