@@ -47,7 +47,7 @@ const Form = ({ initialData, onCancelEdit }) => {
   };
 
   return (
-    <div className="h-fit bg-white border-2 shadow-2xl rounded-lg w-full px-10 my-10">
+    <div className="h-fit bg-white border-2 shadow-2xl rounded-lg w-full px-10 my-10 lg:my-0">
       <form
         autoComplete="off"
         onSubmit={handleSubmit}

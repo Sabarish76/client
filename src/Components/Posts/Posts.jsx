@@ -8,7 +8,7 @@ const Posts = () => {
   const { posts, loading, error } = useSelector((state) => state.posts);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div className="loader"></div>;
   }
 
   if (error) {
