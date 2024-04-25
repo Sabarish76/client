@@ -37,7 +37,7 @@ const Post = ({ post, onEdit }) => {
   };
   return (
     <div style={{ marginBottom: "20px" }}>
-      <div className="max-w-sm bg-white border-2 border-grey-200 shadow-xl rounded-lg">
+      <div className="max-w-sm  bg-white border-2 border-grey-200 shadow-xl rounded-lg">
         <div
           className="relative"
           onMouseEnter={handleMouseEnter}

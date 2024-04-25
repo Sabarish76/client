@@ -12,7 +12,7 @@ const Posts = () => {
   }
 
   if (error) {
-    return <div>Error:{error}</div>;
+    return <div>Error: {error}</div>;
   }
 
   const handleEdit = (post) => {
@@ -29,10 +29,12 @@ const Posts = () => {
       {selectedPost ? (
         <Form initialData={selectedPost} onCancelEdit={handleCancelEdit} />
       ) : (
-        <div className="grid grid-cols-1  w-full xl:grid-cols-2 xl:gap-10">
-          {posts.map((post) => (
-            <Post key={post._id} post={post} onEdit={handleEdit} />
-          ))}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 max-w-screen-lg">
+            {posts.map((post) => (
+              <Post key={post._id} post={post} onEdit={handleEdit} />
+            ))}
+          </div>
         </div>
       )}
     </div>
