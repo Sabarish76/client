@@ -6,16 +6,18 @@ import * as constant from "../constants/PostConstants";
 function* addPosts(action) {
   try {
     const response = yield axios.post(
-      "http://localhost:8000/posts",
+      "https://memories-server-1.onrender.com/posts",
       action.payload,
       {
         headers: { "Content-Type": "application/json" },
       }
     );
-    if (response.status === 200) {
+    if (response.status >= 200 && response.status < 300) {
       yield put(actions.addPostsSuccess(response.data));
+      console.log("success", response.data);
     } else {
       yield put(actions.addPostsFailure("Failed to add posts"));
+      console.error("fail");
     }
   } catch (error) {
     yield put(actions.addPostsFailure(error));
@@ -23,7 +25,7 @@ function* addPosts(action) {
 }
 
 function fetchpostapi() {
-  return axios.get("http://localhost:8000/posts");
+  return axios.get("https://memories-server-1.onrender.com/posts");
 }
 
 function* fetchPosts() {
@@ -36,11 +38,15 @@ function* fetchPosts() {
 }
 
 function updatepostapi(id, postData) {
-  return axios.patch(`http://localhost:8000/posts/${id}`, postData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return axios.patch(
+    `https://memories-server-1.onrender.com/posts/${id}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 }
 
 function* updatePost(action) {
@@ -57,7 +63,7 @@ function* deletePost(action) {
   try {
     const response = yield call(
       axios.delete,
-      `http://localhost:8000/posts/${action.payload}`
+      `https://memories-server-1.onrender.com/posts/${action.payload}`
     );
     if (response.status === 200) {
       yield put(actions.deletePostSuccess(action.payload));
@@ -73,7 +79,7 @@ function* LikePost(action) {
   try {
     const response = yield call(
       axios.patch,
-      `http://localhost:8000/posts/${action.payload}/likePost`
+      `https://memories-server-1.onrender.com/posts/${action.payload}/likePost`
     );
     if (response.status === 200) {
       yield put(actions.likePostSuccess(response.data));
