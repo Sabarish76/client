@@ -26,16 +26,42 @@
     -->
     <title>Memories App</title>
     <!-- Hotjar Tracking Code for https://memories-client-dhj1.onrender.com/ -->
-    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.7.4-min.js.gz"></script>
-    <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.4.1-min.js.gz"></script>
-    <script src="https://cdn.amplitude.com/libs/plugin-autocapture-browser-0.9.0-min.js.gz"></script>
-    <script>
-      window.amplitude
-        .add(window.sessionReplay.plugin({ sampleRate: 1 }))
-        .promise.then(function () {
-          window.amplitude.add(window.amplitudeAutocapturePlugin.plugin());
-          window.amplitude.init("1c23b744728ce53818ea8ba56deb1e4d");
+    <script type="text/javascript">
+      (window.heap = window.heap || []),
+        (heap.load = function (e, t) {
+          (window.heap.appid = e), (window.heap.config = t = t || {});
+          var r = document.createElement("script");
+          (r.type = "text/javascript"),
+            (r.async = !0),
+            (r.src = "https://cdn.heapanalytics.com/js/heap-" + e + ".js");
+          var a = document.getElementsByTagName("script")[0];
+          a.parentNode.insertBefore(r, a);
+          for (
+            var n = function (e) {
+                return function () {
+                  heap.push(
+                    [e].concat(Array.prototype.slice.call(arguments, 0))
+                  );
+                };
+              },
+              p = [
+                "addEventProperties",
+                "addUserProperties",
+                "clearEventProperties",
+                "identify",
+                "resetIdentity",
+                "removeEventProperty",
+                "setEventProperties",
+                "track",
+                "unsetEventProperty",
+              ],
+              o = 0;
+            o < p.length;
+            o++
+          )
+            heap[p[o]] = n(p[o]);
         });
+      heap.load("6677574");
     </script>
   </head>
   <body>
